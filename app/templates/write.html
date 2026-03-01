@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Uplift — Write a Message{% endblock %}
+
+{% block content %}
+<div class="card animate-in">
+    <div class="icon">💬</div>
+    <div class="label-chip">Write Something Kind</div>
+
+    <h1>Lift someone up.</h1>
+    <p class="sub">Your words could be someone's daily message tomorrow.</p>
+
+    <!-- Safety filter chip -->
+    <div class="safety-chip">🛡️ Auto-filter enabled</div>
+
+    {% if error %}
+    <div class="alert alert-error" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <form method="POST" action="/write" class="write-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+        <div class="textarea-wrap">
+            <textarea id="msgBox" name="text" maxlength="{{ max_length }}"
+                placeholder="Write something kind for someone else…" aria-label="Your positive message"
+                required></textarea>
+        </div>
+        <div class="char-counter"><span id="charCount">0</span> / {{ max_length }}</div>
+
+        <ul class="guidelines">
+            <li>Be kind and encouraging</li>
+            <li>No hate, negativity, or personal attacks</li>
+            <li>Keep it under {{ max_length }} characters</li>
+        </ul>
+
+        <p class="hint">Messages are anonymous and filtered for safety.</p>
+
+        <div class="btn-row">
+            <a href="/" class="btn btn-secondary">← Back</a>
+            <button type="submit" class="btn btn-primary">Submit →</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

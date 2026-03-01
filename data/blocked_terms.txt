@@ -1,0 +1,22 @@
+# ── Uplift: Blocked Terms ───────────────────────────────────────
+#
+# One term per line (case-insensitive, word-boundary matched).
+# Lines starting with # are comments.
+#
+# HOW TO POPULATE:
+#   Add individual words that should NEVER appear in a message.
+#   The moderation engine matches each term against word boundaries,
+#   so "hate" will match "I hate you" but not "whatever".
+#
+#   Obtain a curated list from a reputable content-moderation
+#   resource (e.g. Hatebase, Google Jigsaw) and paste here.
+#
+# IMPORTANT: Keep this file private — do not commit explicit
+# slur lists to public repositories.
+# ─────────────────────────────────────────────────────────────────
+
+# Example placeholder entries (replace with real terms):
+hate
+loser
+stupid
+idiot

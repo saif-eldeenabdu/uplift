@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Uplift — Today's Message{% endblock %}
+
+{% block content %}
+<div class="card animate-in">
+    <div class="icon">✦</div>
+    <div class="label-chip">Today's Message</div>
+
+    <!-- Daily message (auto-escaped by Jinja2) -->
+    <h1 class="message-text">{{ message_text }}</h1>
+
+    <p class="sub">A message written by someone who wanted to lift you up.</p>
+
+    <a href="/write" class="btn btn-primary">✍️ Write a message</a>
+
+    <p class="hint">
+        {% if is_fallback %}
+        No community messages yet — be the first to contribute!
+        {% else %}
+        Daily message refreshes every 24 hours
+        {% endif %}
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Uplift — Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/static/styles.css" />
+</head>
+
+<body>
+    <header class="navbar">
+        <a href="/" class="logo">Uplift<span>.</span></a>
+        <nav>
+            <a href="/">Home</a>
+            <span style="opacity:.5;">Admin Dashboard</span>
+        </nav>
+    </header>
+
+    <main class="page-wrapper admin-page">
+
+        {% if not authenticated %}
+        <!-- ── Login form ───────────────────────────────────────── -->
+        <div class="card animate-in" style="max-width:400px;">
+            <div class="icon">🔒</div>
+            <h1>Admin Access</h1>
+            <p class="sub">Enter the admin password to continue.</p>
+            <form method="GET" action="/admin" class="write-form">
+                <div class="textarea-wrap">
+                    <input type="password" name="password" placeholder="Password" class="admin-input" required
+                        aria-label="Admin password" />
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top:1rem;">Enter →</button>
+            </form>
+        </div>
+
+        {% else %}
+        <!-- ── Dashboard ────────────────────────────────────────── -->
+        <div class="admin-grid">
+
+            <!-- Stats -->
+            <section class="card admin-stats">
+                <h2>📊 Message Stats</h2>
+                <div class="stat-row">
+                    <div class="stat">
+                        <span class="stat-num">{{ stats.total }}</span>
+                        <span class="stat-label">Total</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-num approved">{{ stats.approved }}</span>
+                        <span class="stat-label">Approved</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-num rejected">{{ stats.rejected }}</span>
+                        <span class="stat-label">Rejected</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-num pending">{{ stats.pending }}</span>
+                        <span class="stat-label">Pending</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pending messages -->
+            <section class="card admin-pending">
+                <h2>⏳ Pending Review ({{ pending_messages|length }})</h2>
+
+                {% if pending_messages %}
+                {% for msg in pending_messages %}
+                <div class="pending-item">
+                    <p class="pending-text">{{ msg.text }}</p>
+                    <p class="pending-meta">Submitted {{ msg.created_at.strftime('%Y-%m-%d %H:%M') }} UTC</p>
+                    <form method="POST" action="/admin/review" class="pending-actions">
+                        <input type="hidden" name="message_id" value="{{ msg.id }}" />
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+                        <input type="hidden" name="password" value="{{ password }}" />
+                        <button type="submit" name="action" value="approve" class="btn btn-approve">✅ Approve</button>
+                        <button type="submit" name="action" value="reject" class="btn btn-reject">❌ Reject</button>
+                        <input type="text" name="reason" placeholder="Reason (optional)" class="reason-input" />
+                    </form>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p class="empty-state">No messages pending review. 🎉</p>
+                {% endif %}
+            </section>
+
+            <!-- Recent moderation events -->
+            <section class="card admin-events">
+                <h2>📋 Recent Moderation Events</h2>
+                {% if recent_events %}
+                <table class="events-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Type</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for evt in recent_events %}
+                        <tr>
+                            <td>{{ evt.created_at.strftime('%m-%d %H:%M') }}</td>
+                            <td><span class="event-badge">{{ evt.event_type }}</span></td>
+                            <td class="details-cell">{{ evt.details_json or '—' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="empty-state">No moderation events yet.</p>
+                {% endif %}
+            </section>
+
+        </div>
+        {% endif %}
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>

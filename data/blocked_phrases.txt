@@ -1,0 +1,18 @@
+# ── Uplift: Blocked Phrases ─────────────────────────────────────
+#
+# One phrase per line (case-insensitive, substring matched).
+# Lines starting with # are comments.
+#
+# HOW TO POPULATE:
+#   Add multi-word phrases that should trigger an automatic reject.
+#   The moderation engine does a simple substring search after
+#   normalisation, so "go away" will match "just go away already".
+#
+# IMPORTANT: Keep this file private.
+# ─────────────────────────────────────────────────────────────────
+
+# Example placeholder entries (replace with real phrases):
+go away
+you suck
+no one cares
+shut up

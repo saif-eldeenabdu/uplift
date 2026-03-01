@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Uplift{% endblock %}</title>
+    <meta name="description" content="Uplift — receive one positive message per day." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/static/styles.css" />
+</head>
+
+<body>
+    <!-- ── Navbar ──────────────────────────────────────────────── -->
+    <header class="navbar">
+        <a href="/" class="logo">Uplift<span>.</span></a>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/write">Write</a>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+                <span class="icon-sun">☀️</span>
+                <span class="icon-moon">🌙</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- ── Main ────────────────────────────────────────────────── -->
+    <main class="page-wrapper">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ── Footer ──────────────────────────────────────────────── -->
+    <footer class="footer">
+        <p>Messages are anonymous and filtered for safety.</p>
+        <p class="privacy-note">We store no personal data — only anonymous IDs and message text.</p>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>
