@@ -18,7 +18,7 @@ class Settings(BaseSettings):
 
     # ── Core ────────────────────────────────────────────────────
     secret_key: str = "change-me-to-a-real-secret"
-    database_url: str = "sqlite+aiosqlite:///./uplift.db"
+    database_url: str = "sqlite+aiosqlite:////tmp/uplift.db"
     admin_password: str = "admin"
 
     # ── Message constraints ─────────────────────────────────────

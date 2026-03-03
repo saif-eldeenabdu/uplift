@@ -37,16 +37,20 @@ from app.services.delivery import (
 )
 from app.settings import settings
 
+import os
+
 # ── Logging ─────────────────────────────────────────────────────
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ── App ─────────────────────────────────────────────────────────
 app = FastAPI(title="Uplift", docs_url=None, redoc_url=None)
 
 # Static files & templates
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
-templates = Jinja2Templates(directory="app/templates")
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
 # Signed-cookie serialiser
 _signer = URLSafeSerializer(settings.secret_key, salt="uplift-user")
